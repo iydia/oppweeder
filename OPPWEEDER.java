@@ -8,6 +8,8 @@ public class OPPWEEDER {
     public static void main(String[] args) {
             List<String> followers = dataCollect("Followers.csv", "Remove");
             List<String> following = dataCollect("Following.csv", "Following");
+            //List<String> dogs = new ArrayList<>();
+            //dogs.addAll(followers);
 
         System.out.println(followers);
         System.out.println(following);
