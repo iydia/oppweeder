@@ -6,16 +6,23 @@ import java.util.List;
 
 public class OPPWEEDER {
     public static void main(String[] args) {
-            List<String> followers = dataCollect("Followers.csv", "Remove");
-            List<String> following = dataCollect("Following.csv", "Following");
-            //List<String> dogs = new ArrayList<>();
-            //dogs.addAll(followers);
-
-        System.out.println(followers);
-        System.out.println(following);
+            List<String> followers = readCSV("ALL Followers.csv", "Remove");
+            List<String> following = readCSV("ALL Following.csv", "Following");
+            List<String> dawgs = new ArrayList<>();
+            dawgs.addAll(followers);
+            dawgs.retainAll(following);
+            List<String> disciples = new ArrayList<>();
+            disciples.addAll(followers);
+            disciples.removeAll(following);
+            List<String> opps = new ArrayList<>();
+            opps.addAll(following);
+            opps.removeAll(followers);
+        //System.out.println(dawgs);
+        //System.out.println(disciples);
+        System.out.println(opps);
     }
 
-    public static List<String> dataCollect(String fileName, String fillerWord){
+    public static List<String> readCSV(String fileName, String fillerWord){
         List<String> data = new ArrayList<>();
         boolean add = true;
         try (BufferedReader file = new BufferedReader(new FileReader(fileName))){
