@@ -6,35 +6,31 @@ import java.util.List;
 
 public class OPPWEEDER {
     public static void main(String[] args) {
-            List<String> followers = dataCollect("Followers.csv");
-            List<String> following = dataCollect("Following.csv");
+            List<String> followers = dataCollect("Followers.csv", "Remove");
+            List<String> following = dataCollect("Following.csv", "Following");
 
         System.out.println(followers);
         System.out.println(following);
     }
 
-    public static List<String> dataCollect(String fileName){
+    public static List<String> dataCollect(String fileName, String fillerWord){
         List<String> data = new ArrayList<>();
-        int count = 0;
-
-        try (BufferedReader file = new BufferedReader(new FileReader(fileName))) {
+        boolean add = true;
+        try (BufferedReader file = new BufferedReader(new FileReader(fileName))){
             String line;
-            while ((line = file.readLine()) != null) {
-                switch(count){
-                    case 0:
+            while ((line = file.readLine()) != null){
+                if(!line.equals(fillerWord)){
+                    if (add == true){
                         data.add(line);
-                        count+=1;
-                        break;
-                    case 1:
-                        count-=1;
-                        break;
-                    
+                        add = false;
+                    }
+                } else {
+                    add = true;
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException e){
             e.printStackTrace();
         }
-
         return data;
     }
 }
