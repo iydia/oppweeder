@@ -6,8 +6,8 @@ import java.util.List;
 
 class Main {
     public static void main(String[] args) {
-        List<String> followers = readCSV("My Gollowers - Sheet1.csv");
-        List<String> following = readCSV("My Gollowing - Sheet1.csv");
+        List<String> followers = readCSV("Test Followers - Sheet1.csv");
+        List<String> following = readCSV("Test Following - Sheet1.csv");
         List<String> dawgs = new ArrayList<>();
         dawgs.addAll(followers);
         dawgs.retainAll(following);
