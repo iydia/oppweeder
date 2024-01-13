@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OPPWEEDER {
+public class Tester {
     public static void main(String[] args) {
-            List<String> followers = readCSV("My Gollowers - Sheet1.csv");
-            List<String> following = readCSV("My Gollowing - Sheet1.csv");
+            List<String> followers = readCSV("GH Followers - Sheet1.csv");
+            List<String> following = readCSV("EC Following - Sheet1.csv");
             List<String> dawgs = new ArrayList<>();
             dawgs.addAll(followers);
             dawgs.retainAll(following);
@@ -21,6 +21,7 @@ public class OPPWEEDER {
         //System.out.println(following);
         //System.out.println(dawgs);
         //System.out.println(disciples);
+        System.out.println(followers.size());
         System.out.println(opps);
     }
 
@@ -30,15 +31,17 @@ public class OPPWEEDER {
         try (BufferedReader file = new BufferedReader(new FileReader(fileName))){
             String line;
             while ((line = file.readLine()) != null){
-                if(!line.equals("Following")){
-                    if(!line.equals("Follow")){
-                        if (add == true){
-                            data.add(line);
-                            add = false;
-                        }
-                    }
+                if(add == true){
+                    data.add(line);
+                    add = false;
                 } else {
-                    add = true;
+                    if(line.equals("Following")){
+                        add = true;
+                    } else if(line.equals("Follow")){
+                        add = true;
+                    } else {
+                        add = false;
+                    }    
                 }
             }
         } catch (IOException e){
