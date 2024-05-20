@@ -3,7 +3,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
+
+// NOTE: This program will not work if someones ig username contains "Follow" or "Remove"
 
 class Main {
     public static void main(String[] args) {
@@ -30,38 +31,18 @@ class Main {
         opps.removeAll(followers);
 
         //System.out.println(followers);
+        System.out.println(followers.size());
         //System.out.println(following);
+        System.out.println(following.size());
         
         revealOpps(opps);
     }
 
-    // Filters out usernames that do not include a period, underscore, number, or alphabet
-    private static List<String> filterValidUsernames(List<String> usernames) {
-        List<String> filteredUsernames = new ArrayList<>();
-        Pattern pattern = Pattern.compile(".*[._\\dA-Za-z].*");
-        for (String username : usernames) {
-            if (pattern.matcher(username).matches()) {
-                filteredUsernames.add(username);
-            }
-        }
-        return filteredUsernames;
-    }
-
-    // Filters out names and keeps usernames
-    // Assumes list is prefiltered into repeating [username, name] entries
-    private static List<String> usernames(List<String> list) {
-        List<String> result = new ArrayList<>();
-        for (int i = 0; i < list.size(); i += 2) {
-            result.add(list.get(i));
-        }
-        return result;
-    }
-
-    // Filters out the "Remove" and "Follow" keywords from Followers
-    private static List<String> filterFollowers(List<String> usernames) {
+    // filters Followers list for the user
+    private static List<String> filterFollowersSelf(List<String> usernames) { // add Requested?
         List<String> newUsernames = new ArrayList<>();
 
-        // filter out "Follow" first because CSV is weirfd
+        // filter out "Follow" first because instagram is gay
         for (String username : usernames) {
             if (!username.equals("Follow")) {
                 newUsernames.add(username);
@@ -83,7 +64,24 @@ class Main {
         return result;
     }
 
-    // Filters out the "Following" keyword from Following
+    // filters Followers list for others
+    private static List<String> filterFollowers(List<String> usernames) {
+        List<String> result = new ArrayList<>();
+        boolean keep = true;
+        for (String username : usernames) {
+            if (keep) {
+                result.add(username);
+                keep = false;
+            } else if (username.equals("Following") || username.equals("Follow") || username.equals("Requested")) {
+                keep = true;
+            } else {
+                keep = false;
+            }
+        }
+        return result;
+    }
+
+    // filters following list 
     private static List<String> filterFollowing(List<String> usernames) {
         List<String> result = new ArrayList<>();
         boolean keep = true;
@@ -91,7 +89,7 @@ class Main {
             if (keep) {
                 result.add(username);
                 keep = false;
-            } else if (username.equals("Following")) {
+            } else if (username.equals("Following") || username.equals("Follow")) {
                 keep = true;
             } else {
                 keep = false;
