@@ -1,5 +1,4 @@
-# oppweeder
-Instagram Insight Tool
+# Pppweeder - A Social Media Analytics Tool
 
 ## What is oppweeder?
 This tool provides specific analytics to Instagram users that are not directly provided by the app. 
