@@ -8,7 +8,7 @@ import java.util.List;
 
 class JSListWeeder {
     public static void main(String[] args) {
-        List<String> opps = readCSV("JSList - Sheet1.csv");
+        List<String> opps = readCSV("JSList - Simran - Sheet1.csv");
 
         revealOpps(usernames(opps));
     }

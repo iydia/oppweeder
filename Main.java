@@ -42,7 +42,7 @@ class Main {
     private static List<String> filterFollowersSelf(List<String> usernames) { // add Requested?
         List<String> newUsernames = new ArrayList<>();
 
-        // filter out "Follow" first because instagram is gay
+        // filter out "Follow" first
         for (String username : usernames) {
             if (!username.equals("Follow")) {
                 newUsernames.add(username);
