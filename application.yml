@@ -1,3 +1,7 @@
+spring:
+  profiles:
+    active: development
+
 application:
   instagram:
     url: https://www.instagram.com/

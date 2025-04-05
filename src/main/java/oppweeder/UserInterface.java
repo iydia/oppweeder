@@ -5,7 +5,8 @@ import java.util.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import lombok.RequiredArgsConstructor;
 import oppweeder.config.ApplicationProperties;
@@ -21,12 +22,12 @@ public class UserInterface {
     private final InstagramLoginService instagramLoginService;
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(UserInterface.class, args);
-        UserInterface app = context.getBean(UserInterface.class);
-        app.runApplication();
+        SpringApplication.run(UserInterface.class, args);
     }
 
-    public void runApplication() {
+    @Bean
+    @Profile("development")
+    public void runApplication() throws InterruptedException {
         
         try {
             Scanner scanner = new Scanner(System.in);
@@ -66,6 +67,8 @@ public class UserInterface {
             
         } catch (RuntimeException e) {
             System.out.printf("Exception occured: %s%n", e);
+            System.out.println("Restarting application...");
+            runApplication();
         }
 
     }
