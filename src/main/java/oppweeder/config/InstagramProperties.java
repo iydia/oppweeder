@@ -10,6 +10,6 @@ import lombok.ToString;
 @Component
 @ConfigurationProperties(prefix = "application.instagram")
 public class InstagramProperties {
-    private String username;
-    private String password;
+    private String url;
+    private CredentialProperties credentials;
 }
