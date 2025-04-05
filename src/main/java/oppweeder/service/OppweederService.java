@@ -1,8 +1,11 @@
-package main.java.oppweeder.service;
+package oppweeder.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class OppweederService {
 
     public static String runOppweederScript() {

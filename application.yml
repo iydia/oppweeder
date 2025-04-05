@@ -1,8 +1,4 @@
 application:
   instagram:
-    base-url: https://graph.instagram.com/
-    access-token:
-    user-id:
-    credentials:
-      username:
-      password:
+    username:
+    password:

@@ -1,9 +1,11 @@
-package main.java.oppweeder.service;
+package oppweeder.service;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.stereotype.Service;
 
+@Service
 public class WebDriverService {
     
     public WebDriver getHeadlessDriver() {
@@ -11,4 +13,5 @@ public class WebDriverService {
         options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1200", "--ignore-certificate-errors", "--remote-allow-origins=*");
         return new ChromeDriver(options);
     }
+
 }

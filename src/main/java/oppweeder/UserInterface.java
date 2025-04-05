@@ -1,8 +1,8 @@
-package main.java.oppweeder;
+package oppweeder;
 
 import java.util.*;
 
-import main.java.oppweeder.service.OppweederService;
+import oppweeder.service.OppweederService;
 
 public class UserInterface {
 
