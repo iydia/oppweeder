@@ -1,0 +1,6 @@
+application:
+  instagram:
+    url: https://www.instagram.com/
+    credential:
+      username:
+      password:
