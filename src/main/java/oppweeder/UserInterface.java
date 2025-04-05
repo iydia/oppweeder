@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import oppweeder.config.ApplicationProperties;
 import oppweeder.service.InstagramLoginService;
 
@@ -17,6 +18,7 @@ import oppweeder.service.InstagramLoginService;
 @EnableConfigurationProperties({
     ApplicationProperties.class
 })
+@Slf4j
 public class UserInterface {
 
     private final InstagramLoginService instagramLoginService;
@@ -63,28 +65,28 @@ public class UserInterface {
                 }
 
             }
-            System.out.println("Shutting down application.");
+            log.info("Shutting down application.");
             
         } catch (RuntimeException e) {
-            System.out.printf("Exception occured: %s%n", e);
-            System.out.println("Restarting application...");
+            log.error("Exception occured: ", e);
+            log.warn("Restarting application...");
             runApplication();
         }
 
     }
 
     private void oppweeder(Scanner scanner) {
-        System.out.println("Weeding the opps...");
+        log.info("Weeding the opps...");
 
     }
 
     private void login() {
-        System.out.println("Trying to login...");
+        log.info("Trying to login...");
 
         try {
             instagramLoginService.login();
         } catch (Exception e) {
-            System.out.printf("Could not login: %s%n", e);
+            log.error("Could not login: ", e);
         }
     }
 

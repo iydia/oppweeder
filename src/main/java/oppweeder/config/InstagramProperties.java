@@ -9,5 +9,5 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "application.instagram")
 public class InstagramProperties {
     private String url;
-    private CredentialProperties credentials;
+    private CredentialProperties credential;
 }
