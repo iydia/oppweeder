@@ -2,13 +2,12 @@ package oppweeder;
 
 import java.util.*;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import oppweeder.config.ApplicationProperties;
 import oppweeder.service.InstagramLoginService;
 
@@ -17,13 +16,18 @@ import oppweeder.service.InstagramLoginService;
 @EnableConfigurationProperties({
     ApplicationProperties.class
 })
-@Slf4j
 public class UserInterface {
 
     private final InstagramLoginService instagramLoginService;
 
     public static void main(String[] args) {
+        ConfigurableApplicationContext context = SpringApplication.run(UserInterface.class, args);
+        UserInterface app = context.getBean(UserInterface.class);
+        app.runApplication();
+    }
 
+    public void runApplication() {
+        
         try {
             Scanner scanner = new Scanner(System.in);
             String operation = "";
@@ -58,26 +62,26 @@ public class UserInterface {
                 }
 
             }
-            log.info("Shutting down application.");
+            System.out.println("Shutting down application.");
             
         } catch (RuntimeException e) {
-            log.error("Exception occured: ", e);
+            System.out.printf("Exception occured: %s%n", e);
         }
 
     }
 
     private void oppweeder(Scanner scanner) {
-        log.info("Weeding the opps...");
+        System.out.println("Weeding the opps...");
 
     }
 
     private void login() {
-        log.info("Trying to login...");
+        System.out.println("Trying to login...");
 
         try {
             instagramLoginService.login();
         } catch (Exception e) {
-            log.error("Could not login: ", e);
+            System.out.printf("Could not login: %s%n", e);
         }
     }
 

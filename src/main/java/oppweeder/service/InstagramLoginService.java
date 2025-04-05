@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 
 @Service
-@Slf4j
 public class InstagramLoginService {
 
     private final WebDriverService webDriverService;
@@ -45,7 +44,7 @@ public class InstagramLoginService {
         // Navigate to the Instagram login page
         String loginUrl = instagramProperties.getUrl() + loginAppend;
         driver.get(loginUrl);
-        log.info("Logging in at URL: {}", loginUrl);
+        System.out.printf("Logging in at URL: %s%n", loginUrl);
 
         // Wait for and interact with the username field
         try {
