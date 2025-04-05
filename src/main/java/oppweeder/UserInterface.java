@@ -2,7 +2,10 @@ package main.java.oppweeder;
 
 import java.util.*;
 
+import main.java.oppweeder.service.OppweederService;
+
 public class UserInterface {
+
     public static void main(String[] args) {
         
         Scanner scanner = new Scanner(System.in);
@@ -35,6 +38,8 @@ public class UserInterface {
     }
 
     private static void oppweeder(Scanner scanner) {
-        
+        String opps = OppweederService.runOppweederScript();
+        System.out.printf("Opps: %s%n", opps);
     }
+
 }
