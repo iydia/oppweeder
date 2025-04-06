@@ -27,9 +27,10 @@ public class InstagramLoginService {
 
     private final String loginAppend = "accounts/login/";
 
-    public static final By USERNAME_FIELD = By.name("username");
-    public static final By PASSWORD_FIELD = By.name("password");
-    public static final By LOGIN_BUTTON = By.cssSelector("button[type='submit']");
+    private static final By USERNAME_FIELD = By.name("username");
+    private static final By PASSWORD_FIELD = By.name("password");
+    private static final By LOGIN_BUTTON = By.cssSelector("button[type='submit']");
+    private static final By MAIN_CLASS = By.cssSelector("main.xvbhtw8.x78zum5.xdt5ytf.x1iyjqo2.xl56j7k");
 
     @Autowired
     public InstagramLoginService(WebDriverService webDriverService, InstagramProperties instagramProperties) {
@@ -74,10 +75,11 @@ public class InstagramLoginService {
             throw new RuntimeException("Login button was not clickable within the expected time.", e);
         }
 
-        try { // Successful login indicator (TO BE UPDATED)
-            webDriverWait.until(ExpectedConditions.urlContains("instagram.com"));
+        try { // Successful login indicator
+            webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(MAIN_CLASS));
+            log.info("Login successful.");
         } catch (TimeoutException e) {
-            throw new RuntimeException("Login did not complete successfully within the expected time.", e);
+            throw new RuntimeException("Main class was not detected within the expected time.", e);
         }
 
         return driver;
