@@ -45,12 +45,14 @@ public class InstagramService {
         }
         
         try {
-            // Load Java Script from the resource file:
+            // Load script from the resource file, casting the driver to execute it
             String oppweederScript = loadScript(oppweederPath);
-
-            // Execute script, injecting target username
             JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+
+            // Inject target username and execute the script
+            log.info("Injecting username '{}' into script...", username);
             Object opps = jsExecutor.executeScript(oppweederScript, username);
+
             log.info("Opps: {}", opps);
 
         } catch (Exception e) {
@@ -73,12 +75,15 @@ public class InstagramService {
     }
 
     public String loadScript(String path) {
+        log.info("Loading script at path: {}", path);
+
         try {
             ClassPathResource resource = new ClassPathResource(path);
             InputStream inputStream = resource.getInputStream();
             String script = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))
                     .lines()
                     .collect(Collectors.joining("\n"));
+            //log.info("Found script: \n\n{}\n\n", script);
             return script;
         } catch (Exception e) {
             throw new RuntimeException("Failed to load script from: " + path, e);
