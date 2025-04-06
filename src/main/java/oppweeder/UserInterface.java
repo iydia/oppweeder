@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import oppweeder.config.ApplicationProperties;
-import oppweeder.service.InstagramLoginService;
+import oppweeder.service.InstagramService;
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -21,7 +21,7 @@ import oppweeder.service.InstagramLoginService;
 @Slf4j
 public class UserInterface {
 
-    private final InstagramLoginService instagramLoginService;
+    private final InstagramService instagramService;
 
     public static void main(String[] args) {
         SpringApplication.run(UserInterface.class, args);
@@ -42,13 +42,10 @@ public class UserInterface {
                     Select an operation to run:
 
                     0. Exit
-                    1. Check Profile Views
+                    1. Log in to Instagram
                     2. Weed opps
                     3. View disciples
                     4. View mutuals
-
-                    Testing operations:
-                    100. Login to Instagram
 
                     """);
 
@@ -56,11 +53,10 @@ public class UserInterface {
 
                 switch (operation) {
                     case "0" -> System.out.println("Exiting...");
-                    //case "1" -> checkProfileViews(scanner);
+                    case "1" -> login();
                     case "2" -> oppweeder(scanner);
                     //case "3" -> disciples(scanner);
                     //case "4" -> mutuals(scanner);
-                    case "100" -> login();
                     default -> System.out.println("Not a valid option.");
                 }
 
@@ -75,18 +71,26 @@ public class UserInterface {
 
     }
 
-    private void oppweeder(Scanner scanner) {
-        log.info("Weeding the opps...");
-
-    }
-
     private void login() {
         log.info("Trying to login...");
 
         try {
-            instagramLoginService.login();
+            instagramService.login();
         } catch (Exception e) {
             log.error("Could not login: ", e);
+        }
+    }
+
+    private void oppweeder(Scanner scanner) {
+        log.info("Weeding the opps...");
+
+        System.out.println("Which username weed opps for? ");
+        String targetUser = scanner.nextLine().trim();
+
+        try {
+            
+        } catch (Exception e) {
+            log.error("Exception occurred while weeding the opps: ", e);
         }
     }
 
