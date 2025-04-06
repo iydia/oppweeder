@@ -64,7 +64,6 @@ public class UserInterface {
                     case "2" -> oppweeder(scanner);
                     //case "3" -> disciples(scanner);
                     //case "4" -> mutuals(scanner);
-                    case "100" -> test(scanner);
                     default -> System.out.println("Not a valid option.");
                 }
 
@@ -94,30 +93,20 @@ public class UserInterface {
 
         WebDriver driver = loginService.login();
 
-        System.out.println("Please type \"allow pasting\" into the console. Press enter when you are ready.");
+        System.out.println("Please type \"allow pasting\" into the console. \nPress enter when you are ready.");
         String nextStep = scanner.nextLine().trim();
 
-        System.out.println("Which user do you wish to weed opps for? ");
-        String targetUser = scanner.nextLine().trim();
-
-        try {
-            log.info("Weeding the opps...");
-            driver = instagramService.weedOppsTest2(targetUser, driver);
-        } catch (Exception e) {
-            log.error("Exception occurred while weeding the opps: ", e);
-        }
-    }
-
-    private void test(Scanner scanner) {
-        log.info("Weeding the opps...");
-
-        System.out.println("Which user to weed opps for? ");
-        String targetUser = scanner.nextLine().trim();
-
-        try {
-            instagramService.testJSScript(targetUser);
-        } catch (Exception e) {
-            log.error("Exception occurred while weeding the opps: ", e);
+        String targetUser = "";
+        while (!targetUser.equalsIgnoreCase("quit") && !targetUser.equals("0")) {
+            System.out.println("Which user do you wish to weed opps for? (Type \"quit\" to abort)");
+            targetUser = scanner.nextLine().trim();
+    
+            try {
+                log.info("Weeding the opps...");
+                driver = instagramService.weedOpps(targetUser, driver);
+            } catch (Exception e) {
+                log.error("Exception occurred while weeding the opps: ", e);
+            }
         }
     }
 
