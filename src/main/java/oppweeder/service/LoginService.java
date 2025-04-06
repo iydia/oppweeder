@@ -17,7 +17,7 @@ import java.time.Duration;
 
 @Service
 @Slf4j
-public class InstagramService {
+public class LoginService {
 
     private final WebDriverService webDriverService;
     private final InstagramProperties instagramProperties;
@@ -33,7 +33,7 @@ public class InstagramService {
     private static final By MAIN_CLASS = By.cssSelector("main.xvbhtw8.x78zum5.xdt5ytf.x1iyjqo2.xl56j7k");
 
     @Autowired
-    public InstagramService(WebDriverService webDriverService, InstagramProperties instagramProperties) {
+    public LoginService(WebDriverService webDriverService, InstagramProperties instagramProperties) {
         this.webDriverService = webDriverService;
         this.instagramProperties = instagramProperties;
 

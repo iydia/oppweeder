@@ -8,10 +8,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
+import org.openqa.selenium.WebDriver;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import oppweeder.config.ApplicationProperties;
-import oppweeder.service.InstagramService;
+import oppweeder.service.LoginService;
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ import oppweeder.service.InstagramService;
 @Slf4j
 public class UserInterface {
 
-    private final InstagramService instagramService;
+    private final LoginService loginService;
 
     public static void main(String[] args) {
         SpringApplication.run(UserInterface.class, args);
@@ -75,7 +77,7 @@ public class UserInterface {
         log.info("Trying to login...");
 
         try {
-            instagramService.login();
+            loginService.login();
         } catch (Exception e) {
             log.error("Could not login: ", e);
         }
@@ -84,11 +86,12 @@ public class UserInterface {
     private void oppweeder(Scanner scanner) {
         log.info("Weeding the opps...");
 
-        System.out.println("Which username weed opps for? ");
+        System.out.println("Which user to weed opps for? ");
         String targetUser = scanner.nextLine().trim();
 
         try {
-            
+            WebDriver driver = loginService.login();
+            //instagramService.oppweeder(targetUser);
         } catch (Exception e) {
             log.error("Exception occurred while weeding the opps: ", e);
         }
