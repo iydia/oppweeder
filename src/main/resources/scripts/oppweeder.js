@@ -4,13 +4,11 @@ const metadata = {
   FOLLOWERS: "followers",
   FOLLOWINGS: "followings",
   OPPS: "opps",
-  DISCIPLES: "disciples",
 };
 
 let followers = [];
 let followings = [];
 let opps = [];
-let disciples = [];
 
 const FOLLOWERS_QUERY_URL = `https://www.instagram.com/graphql/query/?query_hash=c76146de99bb02f6415203be841dd25a`;
 const FOLLOWINGS_QUERY_URL = `https://www.instagram.com/graphql/query/?query_hash=d04b0a864b4b54837c0d870b0e77e076`;
@@ -41,7 +39,6 @@ async function scrapeList(queryUrl, userId, metadataKey, edgeKey) {
           })
         )
       );
-
       const data = await response.json();
       const pageInfo = data.data.user[edgeKey].page_info;
 
@@ -54,14 +51,11 @@ async function scrapeList(queryUrl, userId, metadataKey, edgeKey) {
           full_name: node.full_name,
         }))
       );
-
     } catch (error) {
       console.error(`Error fetching ${metadataKey}:`, error);
       break;
     }
   }
-
-  console.log({ [metadataKey]: results });
   return results;
 }
 
@@ -73,13 +67,9 @@ async function scrapeList(queryUrl, userId, metadataKey, edgeKey) {
     const matchingUser = data.users.map(userObj => userObj.user).find(user => user.username === username);
     const userId = matchingUser ? matchingUser.pk : null;  // case user not found
 
-    // Get followers list
+    // Get follower and following lists
     const followers = await scrapeList(FOLLOWERS_QUERY_URL, userId, metadata.FOLLOWERS, "edge_followed_by");  
-    console.log({ [metadata.FOLLOWERS]: followers });
-
-    // Get followings list
     const followings = await scrapeList(FOLLOWINGS_QUERY_URL, userId, metadata.FOLLOWINGS, "edge_follow");
-    console.log({ [metadata.FOLLOWINGS]: followings });
 
     // Determine opps (people you follow who don't follow you back)
     opps = followings.filter((following) => {
@@ -89,19 +79,11 @@ async function scrapeList(queryUrl, userId, metadataKey, edgeKey) {
     });
     console.log({ [metadata.OPPS]: opps });
 
-    // Determine disciples (people who follow you but you don't follow back)
-    disciples = followers.filter((follower) => {
-      return !followings.find(
-        (following) => following.username === follower.username
-      );
-    });
-    console.log({ [metadata.DISCIPLES]: disciples });
-
-    // Prompt user with the available commands
-    console.log(`Commands: copy(x), x = [${Object.values(metadata).join(', ')}]`);
+    // Return the opps array as a JSON string so Selenium can capture it
+    return JSON.stringify(opps);
 
   } catch (e) {
     console.error({ "Process failed with Error": e });
   }
-  
+
 })();
