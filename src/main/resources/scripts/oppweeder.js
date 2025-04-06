@@ -1,4 +1,4 @@
-const username = arguments[0];
+const username = "%s"; // To be substituted
 
 const metadata = {
   FOLLOWERS: "followers",
@@ -39,6 +39,7 @@ async function scrapeList(queryUrl, userId, metadataKey, edgeKey) {
           })
         )
       );
+
       const data = await response.json();
       const pageInfo = data.data.user[edgeKey].page_info;
 
@@ -51,39 +52,50 @@ async function scrapeList(queryUrl, userId, metadataKey, edgeKey) {
           full_name: node.full_name,
         }))
       );
+
     } catch (error) {
       console.error(`Error fetching ${metadataKey}:`, error);
       break;
     }
   }
+
+  console.log({ [metadataKey]: results });
   return results;
 }
 
 (async() => {
   try {
-    // Fetch user ID using the passed username
+    // Fetch user ID
     const response = await fetch(`https://www.instagram.com/web/search/topsearch/?query=${username}`);
     const data = await response.json();
     const matchingUser = data.users.map(userObj => userObj.user).find(user => user.username === username);
     const userId = matchingUser ? matchingUser.pk : null;  // case user not found
 
-    // Get follower and following lists
+    // metadata.FOLLOWERS
     const followers = await scrapeList(FOLLOWERS_QUERY_URL, userId, metadata.FOLLOWERS, "edge_followed_by");  
-    const followings = await scrapeList(FOLLOWINGS_QUERY_URL, userId, metadata.FOLLOWINGS, "edge_follow");
+    console.log({"{}: {}": metadata.FOLLOWERS, followers});
 
-    // Determine opps (people you follow who don't follow you back)
+    // metadata.FOLLOWINGS
+    const followings = await scrapeList(FOLLOWINGS_QUERY_URL, userId, metadata.FOLLOWINGS, "edge_follow");
+    console.log({"{}: {}": metadata.FOLLOWINGS, followings});
+
+    // metadata.OPPS
+    opps = [];
     opps = followings.filter((following) => {
       return !followers.find(
         (follower) => follower.username === following.username
       );
     });
-    console.log({ [metadata.OPPS]: opps });
+    console.log({"{}: {}": metadata.OPPS, opps});
 
-    // Return the opps array as a JSON string so Selenium can capture it
+    // Prompt user with the available commands
+    console.log(`Commands: copy(x), x = [${Object.values(metadata).join(', ')}]`);
+
+    // Return opps regardless, for Selenium to capture
     return JSON.stringify(opps);
 
   } catch (e) {
-    console.error({ "Process failed with Error": e });
+    console.log({"Process failed with Error: {}": e});
   }
 
 })();

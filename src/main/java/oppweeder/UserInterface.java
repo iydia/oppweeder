@@ -90,14 +90,19 @@ public class UserInterface {
     }
 
     private void oppweeder(Scanner scanner) {
-        log.info("Weeding the opps...");
+        log.info("Automating login...");
 
-        System.out.println("Which user to weed opps for? ");
+        WebDriver driver = loginService.login();
+
+        System.out.println("Please type \"allow pasting\" into the console. Press enter when you are ready.");
+        String nextStep = scanner.nextLine().trim();
+
+        System.out.println("Which user do you wish to weed opps for? ");
         String targetUser = scanner.nextLine().trim();
 
         try {
-            WebDriver driver = loginService.login();
-            driver = instagramService.weedOpps(targetUser, driver);
+            log.info("Weeding the opps...");
+            driver = instagramService.weedOppsTest2(targetUser, driver);
         } catch (Exception e) {
             log.error("Exception occurred while weeding the opps: ", e);
         }
