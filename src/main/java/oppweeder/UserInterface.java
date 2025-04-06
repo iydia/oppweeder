@@ -13,6 +13,7 @@ import org.openqa.selenium.WebDriver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import oppweeder.config.ApplicationProperties;
+import oppweeder.service.InstagramService;
 import oppweeder.service.LoginService;
 
 @SpringBootApplication
@@ -24,6 +25,7 @@ import oppweeder.service.LoginService;
 public class UserInterface {
 
     private final LoginService loginService;
+    private final InstagramService instagramService;
 
     public static void main(String[] args) {
         SpringApplication.run(UserInterface.class, args);
@@ -49,6 +51,9 @@ public class UserInterface {
                     3. View disciples
                     4. View mutuals
 
+                    [Testing functions]
+                    100. Test oppweeder script
+
                     """);
 
                 operation = scanner.nextLine().trim();
@@ -59,6 +64,7 @@ public class UserInterface {
                     case "2" -> oppweeder(scanner);
                     //case "3" -> disciples(scanner);
                     //case "4" -> mutuals(scanner);
+                    case "100" -> test(scanner);
                     default -> System.out.println("Not a valid option.");
                 }
 
@@ -91,7 +97,20 @@ public class UserInterface {
 
         try {
             WebDriver driver = loginService.login();
-            //instagramService.oppweeder(targetUser);
+            driver = instagramService.weedOpps(targetUser, driver);
+        } catch (Exception e) {
+            log.error("Exception occurred while weeding the opps: ", e);
+        }
+    }
+
+    private void test(Scanner scanner) {
+        log.info("Weeding the opps...");
+
+        System.out.println("Which user to weed opps for? ");
+        String targetUser = scanner.nextLine().trim();
+
+        try {
+            instagramService.testJSScript(targetUser);
         } catch (Exception e) {
             log.error("Exception occurred while weeding the opps: ", e);
         }

@@ -1,4 +1,4 @@
-const username = "username"; // To be substituted
+const username = arguments[0];
 
 const metadata = {
   FOLLOWERS: "followers",
@@ -67,43 +67,41 @@ async function scrapeList(queryUrl, userId, metadataKey, edgeKey) {
 
 (async() => {
   try {
-    // Fetch user ID
+    // Fetch user ID using the passed username
     const response = await fetch(`https://www.instagram.com/web/search/topsearch/?query=${username}`);
     const data = await response.json();
     const matchingUser = data.users.map(userObj => userObj.user).find(user => user.username === username);
     const userId = matchingUser ? matchingUser.pk : null;  // case user not found
 
-    // metadata.FOLLOWERS
+    // Get followers list
     const followers = await scrapeList(FOLLOWERS_QUERY_URL, userId, metadata.FOLLOWERS, "edge_followed_by");  
-    console.log({"{}: {}": metadata.FOLLOWERS, followers});
+    console.log({ [metadata.FOLLOWERS]: followers });
 
-    // metadata.FOLLOWINGS
+    // Get followings list
     const followings = await scrapeList(FOLLOWINGS_QUERY_URL, userId, metadata.FOLLOWINGS, "edge_follow");
-    console.log({"{}: {}": metadata.FOLLOWINGS, followings});
+    console.log({ [metadata.FOLLOWINGS]: followings });
 
-    // metadata.OPPS
-    opps = [];
+    // Determine opps (people you follow who don't follow you back)
     opps = followings.filter((following) => {
       return !followers.find(
         (follower) => follower.username === following.username
       );
     });
-    console.log({"{}: {}": metadata.OPPS, opps});
+    console.log({ [metadata.OPPS]: opps });
 
-    // metadata.DISCIPLES
-    disciples = [];
+    // Determine disciples (people who follow you but you don't follow back)
     disciples = followers.filter((follower) => {
       return !followings.find(
         (following) => following.username === follower.username
       );
     });
-    console.log({"{}: {}": metadata.DISCIPLES, disciples});
+    console.log({ [metadata.DISCIPLES]: disciples });
 
     // Prompt user with the available commands
     console.log(`Commands: copy(x), x = [${Object.values(metadata).join(', ')}]`);
 
   } catch (e) {
-    console.log({"Process failed with Error: {}": e});
+    console.error({ "Process failed with Error": e });
   }
-
+  
 })();
