@@ -52,7 +52,7 @@ public class LoginService {
             WebElement usernameField = webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(USERNAME_FIELD));
             log.info("Found username field.");
             usernameField.sendKeys(instagramProperties.getCredential().getUsername());
-            log.info("Logging in with username: {}", instagramProperties.getCredential().getUsername());
+            log.info("Entered username: {}", instagramProperties.getCredential().getUsername());
         } catch (TimeoutException e) {
             throw new RuntimeException("Username field did not appear within the expected time.", e);
         }
@@ -61,7 +61,7 @@ public class LoginService {
             WebElement passwordField = webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(PASSWORD_FIELD));
             log.info("Found password field.");
             passwordField.sendKeys(instagramProperties.getCredential().getPassword());
-            log.info("Logging in with password: {}", instagramProperties.getCredential().getPassword());
+            log.info("Entered password.");
         } catch (TimeoutException e) {
             throw new RuntimeException("Password field did not appear within the expected time.", e);
         }

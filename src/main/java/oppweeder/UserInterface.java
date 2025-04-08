@@ -62,7 +62,7 @@ public class UserInterface {
                     case "0" -> System.out.println("Exiting...");
                     case "1" -> login();
                     case "2" -> oppweeder(scanner);
-                    //case "3" -> disciples(scanner);
+                    case "3" -> disciples(scanner);
                     //case "4" -> mutuals(scanner);
                     default -> System.out.println("Not a valid option.");
                 }
@@ -106,6 +106,28 @@ public class UserInterface {
                 driver = instagramService.weedOpps(targetUser, driver);
             } catch (Exception e) {
                 log.error("Exception occurred while weeding the opps: ", e);
+            }
+        }
+    }
+
+    private void disciples(Scanner scanner) {
+        log.info("Automating login...");
+
+        WebDriver driver = loginService.login();
+
+        System.out.println("Please type \"allow pasting\" into the console. \nPress enter when you are ready.");
+        String nextStep = scanner.nextLine().trim();
+
+        String targetUser = "";
+        while (!targetUser.equalsIgnoreCase("quit") && !targetUser.equals("0")) {
+            System.out.println("Which user do you wish to find disciples for? (Type \"quit\" to abort)");
+            targetUser = scanner.nextLine().trim();
+    
+            try {
+                log.info("Finding the disciples...");
+                driver = instagramService.weedOpps(targetUser, driver);
+            } catch (Exception e) {
+                log.error("Exception occurred while finding the disciples: ", e);
             }
         }
     }

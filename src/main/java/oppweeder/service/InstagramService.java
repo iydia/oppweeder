@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class InstagramService {
 
     private final String oppWeederPath = "scripts/oppWeeder.js"; // Placed in src/main/resources/scripts
-    private final String discipleWeederPath = "scripts/discipleWeeder.js"; // Placed in src/main/resources/scripts
+    private final String discipleFinderPath = "scripts/discipleFinder.js"; // Placed in src/main/resources/scripts
 
     public WebDriver weedOpps(String username, WebDriver driver) {
         if (driver == null) {
