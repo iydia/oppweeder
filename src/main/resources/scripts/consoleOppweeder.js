@@ -1,4 +1,4 @@
-const username = "1yddia"; // to be substituted
+const username = "your_username"; // to be substituted
 
 const metadata = {
   FOLLOWERS: "followers",

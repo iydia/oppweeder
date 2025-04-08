@@ -1,10 +1,8 @@
 package oppweeder.service;
 
-import oppweeder.config.InstagramProperties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -24,7 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InstagramService {
 
-    private final String oppweederPath = "scripts/oppweeder.js"; // Placed in src/main/resources/scripts
+    private final String oppWeederPath = "scripts/oppWeeder.js"; // Placed in src/main/resources/scripts
+    private final String discipleWeederPath = "scripts/discipleWeeder.js"; // Placed in src/main/resources/scripts
 
     public WebDriver weedOpps(String username, WebDriver driver) {
         if (driver == null) {
@@ -33,7 +32,7 @@ public class InstagramService {
         }
         
         try {
-            String oppweederScript = loadScript(oppweederPath);
+            String oppweederScript = loadScript(oppWeederPath);
 
             log.info("Weeding opps for '{}'...", username);
             
