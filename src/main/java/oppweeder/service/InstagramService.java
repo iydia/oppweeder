@@ -22,8 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InstagramService {
 
-    private final String oppWeederPath = "scripts/oppWeeder.js"; // Placed in src/main/resources/scripts
-    private final String discipleFinderPath = "scripts/discipleFinder.js"; // Placed in src/main/resources/scripts
+    // The following scripts are placed in src/main/resources/scripts
+    private final String oppWeederPath = "scripts/oppWeeder.js";
+    private final String discipleFinderPath = "scripts/discipleFinder.js"; 
 
     public WebDriver weedOpps(String username, WebDriver driver) {
         if (driver == null) {
@@ -32,12 +33,12 @@ public class InstagramService {
         }
         
         try {
-            String oppweederScript = loadScript(oppWeederPath);
+            String oppWeederScript = loadScript(oppWeederPath);
 
             log.info("Weeding opps for '{}'...", username);
             
             JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
-            String opps = (String) jsExecutor.executeAsyncScript(oppweederScript, username);
+            String opps = (String) jsExecutor.executeAsyncScript(oppWeederScript, username);
             
             LogEntries logs = driver.manage().logs().get(LogType.BROWSER);
             for (LogEntry entry : logs) {
@@ -48,7 +49,36 @@ public class InstagramService {
             prettyPrintJSON(opps);            
 
         } catch (Exception e) {
-            log.error("Error executing oppweeder script: ", e);
+            log.error("Error executing opp weeder script: ", e);
+        }
+        
+        return driver;
+    }
+
+    public WebDriver findDisciples(String username, WebDriver driver) {
+        if (driver == null) {
+            log.error("Driver is null. Ensure that you are logged in before running oppweeder.");
+            return null;
+        }
+        
+        try {
+            String discipleFinderScript = loadScript(discipleFinderPath);
+
+            log.info("Finding disciples for '{}'...", username);
+            
+            JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+            String opps = (String) jsExecutor.executeAsyncScript(discipleFinderScript, username);
+            
+            LogEntries logs = driver.manage().logs().get(LogType.BROWSER);
+            for (LogEntry entry : logs) {
+                log.info("[BROWSER LOG] {}", entry.getMessage());
+            }
+
+            System.out.printf("\nThe following are %s's disciples: %n", username);
+            prettyPrintJSON(opps);            
+
+        } catch (Exception e) {
+            log.error("Error executing disciple finder script: ", e);
         }
         
         return driver;

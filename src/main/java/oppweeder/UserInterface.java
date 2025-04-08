@@ -125,7 +125,7 @@ public class UserInterface {
     
             try {
                 log.info("Finding the disciples...");
-                driver = instagramService.weedOpps(targetUser, driver);
+                driver = instagramService.findDisciples(targetUser, driver);
             } catch (Exception e) {
                 log.error("Exception occurred while finding the disciples: ", e);
             }
