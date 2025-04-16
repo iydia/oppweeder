@@ -7,7 +7,7 @@ This script **complies** with Instagram’s [Terms of Use](https://help.instagra
 
 ## Features
 - **Insights** – Identify mutuals, disciples, and opps.
-- **Privacy-Compliant** – Works with the official [Instagram Graph API](https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login).
+- **Access** – Works with the official [Instagram Graph API](https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login).
 
 ## 🛠️ Installation & Usage
 *(Coming soon: Usage guide!)*
