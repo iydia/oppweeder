@@ -16,10 +16,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 @Service
-@Slf4j
+@Log4j2
 public class InstagramService {
 
     // The following scripts are placed in src/main/resources/scripts

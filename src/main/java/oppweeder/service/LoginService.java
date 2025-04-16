@@ -9,14 +9,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 import org.openqa.selenium.TimeoutException;
 
 import java.time.Duration;
 
 @Service
-@Slf4j
+@Log4j2
 public class LoginService {
 
     private final WebDriverService webDriverService;

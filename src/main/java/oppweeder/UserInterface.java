@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Profile;
 import org.openqa.selenium.WebDriver;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import oppweeder.config.ApplicationProperties;
 import oppweeder.service.InstagramService;
 import oppweeder.service.LoginService;
@@ -21,7 +21,7 @@ import oppweeder.service.LoginService;
 @EnableConfigurationProperties({
     ApplicationProperties.class
 })
-@Slf4j
+@Log4j2
 public class UserInterface {
 
     private final LoginService loginService;
